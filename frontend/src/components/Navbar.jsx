@@ -1,16 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useAppContext } from "../Context/AppContext";
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
-  const { isUser, setIsUser, setShowUserLogin, navigate } = useAppContext();
+  const {
+    isUser,
+    setIsUser,
+    setShowUserLogin,
+    navigate,
+    searchQuery,
+    setSearchQuery,
+  } = useAppContext();
 
   const logout = async () => {
     setIsUser(null);
     navigate("/");
   };
+
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      navigate("/products");
+    }
+  }, [searchQuery]);
 
   return (
     <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
@@ -26,6 +39,7 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
           <input
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
             placeholder="Search products"
@@ -33,7 +47,10 @@ const Navbar = () => {
           <img className="w-5 h-5" src={assets.search_icon} alt="search" />
         </div>
 
-        <div onClick={()=>navigate("/cart")} className="relative cursor-pointer">
+        <div
+          onClick={() => navigate("/cart")}
+          className="relative cursor-pointer"
+        >
           <img className="w-6 h-6" src={assets.nav_cart_icon} alt="cart" />
           <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">
             3
