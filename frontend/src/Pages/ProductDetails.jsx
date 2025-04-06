@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useAppContext } from "../Context/AppContext";
 import { Link, useParams } from "react-router-dom";
 import { assets } from "../assets/assets";
+import ProductCard from "../components/ProductCard";
 
 const ProductDetails = () => {
   const { products, navigate, currency, addToCart } = useAppContext();
@@ -111,8 +112,17 @@ const ProductDetails = () => {
           </div>
         </div>
         {/* Related Products Here */}
-        <div>
-
+        <div className="flex flex-col items-center mt-10">
+          <div className="flex flex-col items-end w-max">
+            <p className="text-2xl font-medium uppercase">Related Products</p>
+            <div className="w-16 h-0.5 bg-amber-400 rounded-full"></div>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mt-6 gap-6 md:gap-6">
+            {relatedProducts.filter((product)=>product.inStock).map((product, index)=>(
+                <ProductCard key={index} product={product}/>
+            ))}
+          </div>
+          <button onClick={()=>{navigate('/products'); scrollTo(0,0)}} className="mx-auto cursor-pointer px-12 my-16 py-2.5 border rounded text-primary hover:bg-primary/10 transition">see more</button>
         </div>
       </div>
     )
