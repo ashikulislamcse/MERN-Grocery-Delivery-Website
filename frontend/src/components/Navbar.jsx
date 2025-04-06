@@ -12,6 +12,7 @@ const Navbar = () => {
     navigate,
     searchQuery,
     setSearchQuery,
+    getCartItem,
   } = useAppContext();
 
   const logout = async () => {
@@ -53,7 +54,7 @@ const Navbar = () => {
         >
           <img className="w-6 h-6" src={assets.nav_cart_icon} alt="cart" />
           <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">
-            3
+            {getCartItem()}
           </button>
         </div>
 
@@ -89,18 +90,30 @@ const Navbar = () => {
         )}
       </div>
 
-      <button
-        onClick={() => (open ? setOpen(false) : setOpen(true))}
-        aria-label="Menu"
-        className="sm:hidden"
-      >
-        {/* Menu Icon SVG */}
-        <img
-          className="w-6 h-6 cursor-pointer"
-          src={open ? assets.close_icon : assets.menu_icon}
-          alt="menu"
-        />
-      </button>
+      <div className="flex items-center gap-6 sm:hidden">
+        <div
+          onClick={() => navigate("/cart")}
+          className="relative cursor-pointer"
+        >
+          <img className="w-6 h-6" src={assets.nav_cart_icon} alt="cart" />
+          <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">
+            {getCartItem()}
+          </button>
+        </div>
+
+        <button
+          onClick={() => (open ? setOpen(false) : setOpen(true))}
+          aria-label="Menu"
+          className=""
+        >
+          {/* Menu Icon SVG */}
+          <img
+            className="w-6 h-6 cursor-pointer"
+            src={open ? assets.close_icon : assets.menu_icon}
+            alt="menu"
+          />
+        </button>
+      </div>
 
       {/* Mobile Menu */}
       {open && (

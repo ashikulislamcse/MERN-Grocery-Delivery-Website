@@ -66,6 +66,7 @@ const ProductDetails = () => {
                 .fill("")
                 .map((_, i) => (
                   <img
+                  key={i}
                     src={i < 4 ? assets.star_icon : assets.star_dull_icon}
                     className="md:w-3.5 w-3"
                   />
