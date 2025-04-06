@@ -65,7 +65,7 @@ export const AppContextProvider = ({ children }) => {
   }
 
   // Total Cart Item
-  const totalCartItem = ()=>{
+  const totalCartItemPrice = ()=>{
     let totalItem = 0;
     for(const items in cartItems){
       let itemInfo = products.find((product)=>product._id === items);
@@ -97,7 +97,7 @@ export const AppContextProvider = ({ children }) => {
     searchQuery,
     setSearchQuery,
     getCartItem,
-    totalCartItem,
+    totalCartItemPrice,
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
