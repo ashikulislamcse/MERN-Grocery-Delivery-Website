@@ -13,11 +13,12 @@ import Cart from "./Pages/Cart";
 import AddAddress from "./Pages/AddAddress";
 import MyOrders from "./Pages/MyOrders";
 import SellerLogin from "./components/Seller/SellerLogin";
+import SellerLayout from "./Pages/Seller/SellerLayout";
 const App = () => {
   const isSellerPath = useLocation().pathname.includes("/seller");
   const { showUserLogin, isSeller } = useAppContext();
   return (
-    <div>
+    <div className="text-default min-h-screen text-gray-700 bg-white">
       {isSellerPath ? null : <Navbar />}
       {showUserLogin ? <Login /> : null}
       <Toaster />
@@ -34,7 +35,7 @@ const App = () => {
           <Route path="/my-orders" element={<MyOrders />} />
           <Route
             path="/seller"
-            element={isSeller ? <Navigate to="/" /> : <SellerLogin />}
+            element={isSeller ? <SellerLayout/> : <SellerLogin />}
           ></Route>
         </Routes>
       </div>
