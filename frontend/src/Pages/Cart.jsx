@@ -102,7 +102,7 @@ const Cart = () => {
               {product.offerPrice * product.quantity}
             </p>
             <button
-              onClick={() => removeCartItem()}
+              onClick={() => removeCartItem(product._id)}
               className="cursor-pointer mx-auto"
             >
               <img
