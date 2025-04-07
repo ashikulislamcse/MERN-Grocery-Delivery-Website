@@ -1,6 +1,6 @@
-import User from "../Models/userModel.js";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import User from "../Models/userModel.js";
+import jwt from 'jsonwebtoken'
 
 export const Register = async (req, res) => {
   try {
@@ -35,9 +35,10 @@ export const Register = async (req, res) => {
   }
 };
 
+
 export const Login = async (req, res) => {
   try {
-    const { email, password} = req.body;
+    const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({
         message: "All fields Are required",
@@ -88,17 +89,6 @@ export const Login = async (req, res) => {
         user,
         success: true,
       });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const Logout = async (req, res) => {
-  try {
-    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-      message: "Logout Successfully",
-      success: true,
-    });
   } catch (error) {
     console.log(error);
   }
