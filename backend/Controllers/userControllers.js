@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../Models/userModel.js";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken";
 
 export const Register = async (req, res) => {
   try {
@@ -34,7 +34,6 @@ export const Register = async (req, res) => {
     console.log(error);
   }
 };
-
 
 export const Login = async (req, res) => {
   try {
@@ -83,12 +82,34 @@ export const Login = async (req, res) => {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
       })
       .json({
         message: `Welcome Back ${user.name}`,
         user,
         success: true,
       });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const isAuth = async (req, res) => {
+  try {
+    const { userId } = req;
+    const user = await User.findById(userId).select("-password");
+    return res.status(200).json({ success: true, user });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const Logout = async (req, res) => {
+  try {
+    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+      message: "Logout Successfully",
+      success: true,
+    });
   } catch (error) {
     console.log(error);
   }
