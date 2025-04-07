@@ -6,6 +6,7 @@ import cors from "cors";
 import ConnectDB from "./config/db.js";
 ConnectDB();
 import userRoute from "./Routes/userRoute.js";
+import sellerRouter from "./Routes/sellerRoute.js";
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use(cors(corsOption));
 
 
 app.use("/api/user", userRoute);
+app.use("/api/seller", sellerRouter);
 
 
 const PORT = process.env.PORT || 5001;
