@@ -7,7 +7,11 @@ import ConnectDB from "./config/db.js";
 ConnectDB();
 import userRoute from "./Routes/userRoute.js";
 import sellerRouter from "./Routes/sellerRoute.js";
+import connectClowdinary from "./Utils/clowdinary.js";
 
+
+
+connectClowdinary();
 
 const app = express();
 app.use(express.json());
