@@ -19,6 +19,7 @@ const Login = () => {
         password,
       });
       if (data.success) {
+        toast.success(data.message);
         navigate("/");
         setIsUser(data.user);
         setShowUserLogin(false);
