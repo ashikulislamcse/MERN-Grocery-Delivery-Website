@@ -22,7 +22,14 @@ export const addProduct = async (req, res) => {
   }
 };
 
-export const productList = async (req, res) => {};
+export const productList = async (req, res) => {
+    try {
+        const products = await Product.find({})
+        res.json({success: true, products})
+    } catch (error) {
+        console.log(error)
+    }
+};
 
 export const productById = async (req, res) => {};
 
