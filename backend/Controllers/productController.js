@@ -23,22 +23,30 @@ export const addProduct = async (req, res) => {
 };
 
 export const productList = async (req, res) => {
-    try {
-        const products = await Product.find({})
-        res.json({success: true, products})
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+    const products = await Product.find({});
+    res.json({ success: true, products });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const productById = async (req, res) => {
-    try {
-        const {id} = req.body;
-        const products = await Product.findById(id)
-        res.json({success: true, products});
-    } catch (error) {
-        console.log(error)
-    }
+  try {
+    const { id } = req.body;
+    const products = await Product.findById(id);
+    res.json({ success: true, products });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export const changeStock = async (req, res) => {};
+export const changeStock = async (req, res) => {
+  try {
+    const { id, inStock } = req.body;
+    await Product.findByIdAndUpdate(id, { inStock });
+    res.json({ success: true, message: "Stock Updated" });
+  } catch (error) {
+    console.log(error);
+  }
+};
