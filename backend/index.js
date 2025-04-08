@@ -9,7 +9,7 @@ import userRoute from "./Routes/userRoute.js";
 import sellerRouter from "./Routes/sellerRoute.js";
 import connectClowdinary from "./Utils/clowdinary.js";
 import productRouter from './Routes/productRoute.js'
-
+import cartRouter from './Routes/cartRoute.js'
 
 connectClowdinary();
 
@@ -27,6 +27,7 @@ app.use(cors(corsOption));
 app.use("/api/user", userRoute);
 app.use("/api/seller", sellerRouter);
 app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter);
 
 
 const PORT = process.env.PORT || 5001;
