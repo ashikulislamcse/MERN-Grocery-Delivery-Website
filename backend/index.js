@@ -11,6 +11,7 @@ import connectClowdinary from "./Utils/clowdinary.js";
 import productRouter from './Routes/productRoute.js'
 import cartRouter from './Routes/cartRoute.js'
 import addressRouter from './Routes/addressRoute.js'
+import orderRouter from './Routes/orderRoute.js'
 
 connectClowdinary();
 
@@ -30,6 +31,7 @@ app.use("/api/seller", sellerRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/address", addressRouter);
+app.use("/api/order", orderRouter);
 
 
 const PORT = process.env.PORT || 5001;
