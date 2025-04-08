@@ -8,6 +8,7 @@ ConnectDB();
 import userRoute from "./Routes/userRoute.js";
 import sellerRouter from "./Routes/sellerRoute.js";
 
+
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
