@@ -8,7 +8,7 @@ ConnectDB();
 import userRoute from "./Routes/userRoute.js";
 import sellerRouter from "./Routes/sellerRoute.js";
 import connectClowdinary from "./Utils/clowdinary.js";
-
+import productRouter from './Routes/productRoute.js'
 
 
 connectClowdinary();
@@ -26,6 +26,7 @@ app.use(cors(corsOption));
 
 app.use("/api/user", userRoute);
 app.use("/api/seller", sellerRouter);
+app.use("/api/product", productRouter);
 
 
 const PORT = process.env.PORT || 5001;
