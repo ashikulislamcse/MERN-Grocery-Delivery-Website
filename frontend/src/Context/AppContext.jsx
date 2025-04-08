@@ -34,6 +34,19 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
+  // Fetch User Status
+  const fetchUser = async()=>{
+    try {
+      const {data} = await axios.get('/api/user/is-auth');
+      if(data.success){
+        setIsUser(data.user);
+      }
+    } catch (error) {
+      toast.error(error.message)
+      setIsUser(null);
+    }
+  }
+
   // Fatch All Products
   const fetchProducts = async () => {
     try {
@@ -106,6 +119,7 @@ export const AppContextProvider = ({ children }) => {
   useEffect(() => {
     fetchSeller();
     fetchProducts();
+    fetchUser();
   }, []);
 
   const value = {
