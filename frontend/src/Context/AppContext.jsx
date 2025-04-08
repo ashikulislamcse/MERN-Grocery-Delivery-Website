@@ -35,7 +35,7 @@ export const AppContextProvider = ({ children }) => {
   };
 
   // Fatch All Products
-  const fetchProducts  = async () => {
+  const fetchProducts = async () => {
     setProducts(dummyProducts);
   };
 
@@ -96,7 +96,7 @@ export const AppContextProvider = ({ children }) => {
 
   useEffect(() => {
     fetchSeller();
-    fetchProducts ();
+    fetchProducts();
   }, []);
 
   const value = {
