@@ -31,6 +31,14 @@ export const productList = async (req, res) => {
     }
 };
 
-export const productById = async (req, res) => {};
+export const productById = async (req, res) => {
+    try {
+        const {id} = req.body;
+        const products = await Product.findById(id)
+        res.json({success: true, products});
+    } catch (error) {
+        console.log(error)
+    }
+};
 
 export const changeStock = async (req, res) => {};
