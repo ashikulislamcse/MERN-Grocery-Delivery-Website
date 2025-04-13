@@ -17,6 +17,7 @@ import SellerLayout from "./Pages/Seller/SellerLayout";
 import AddProduct from "./Pages/Seller/AddProduct";
 import ProductList from "./Pages/Seller/ProductList";
 import Orders from "./Pages/Seller/Orders";
+import ProtectedRoute from "./Pages/ProtectedRoute";
 const App = () => {
   const isSellerPath = useLocation().pathname.includes("/seller");
   const { showUserLogin, isSeller } = useAppContext();
@@ -33,7 +34,7 @@ const App = () => {
           <Route path="/products" element={<AllProducts />} />
           <Route path="/products/:category" element={<ProductCategories />} />
           <Route path="/products/:category/:id" element={<ProductDetails />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           <Route path="/add-address" element={<AddAddress />} />
           <Route path="/my-orders" element={<MyOrders />} />
           <Route
