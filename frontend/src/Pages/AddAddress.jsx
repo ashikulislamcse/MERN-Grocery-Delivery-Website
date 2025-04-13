@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { assets } from "../assets/assets";
+import { useAppContext } from "../Context/AppContext";
+import toast from "react-hot-toast";
 
 const InputField = ({ type, placeholder, handleChange, name, address }) => (
   <input
@@ -8,15 +10,17 @@ const InputField = ({ type, placeholder, handleChange, name, address }) => (
     placeholder={placeholder}
     onChange={handleChange}
     name={name}
-    value={address}
+    value={address[name]}
     required
   />
 );
 
 const AddAddress = () => {
-  const { address, setAddress } = useState({
-    first_name: "",
-    last_name: "",
+  const { axios, isUser, navigate } = useAppContext();
+
+  const [address, setAddress] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     street: "",
     city: "",
@@ -36,7 +40,25 @@ const AddAddress = () => {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await axios.post("/api/address/add", {userId: isUser._id, address });
+      if (data.success) {
+        toast.success(data.message);
+        navigate("/cart");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
+
+  useEffect(() => {
+    if (!isUser) {
+      navigate("/cart");
+    }
+  }
+  , [isUser, navigate]);
   return (
     <div className="mt-10 pb-10">
       <p className="text-2xl md:text-3xl text-gray-500">
@@ -49,14 +71,14 @@ const AddAddress = () => {
               <InputField
                 handleChange={handleChange}
                 address={address}
-                name="first_name"
+                name="firstName"
                 type="text"
                 placeholder="first name"
               />
               <InputField
                 handleChange={handleChange}
                 address={address}
-                name="last_name"
+                name="lastName"
                 type="text"
                 placeholder="Last name"
               />
@@ -115,7 +137,7 @@ const AddAddress = () => {
               placeholder="Phone"
             />
 
-            <button className="w-full mt-6 bg-primary text-white py-3 hover:bg-primary-dull transition cursor-pointer uppercase">
+            <button type="submit" className="w-full mt-6 bg-primary text-white py-3 hover:bg-primary-dull transition cursor-pointer uppercase">
               Save Address
             </button>
           </form>

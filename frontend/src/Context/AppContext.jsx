@@ -12,7 +12,8 @@ export const AppContextProvider = ({ children }) => {
   const currency = import.meta.env.VITE_CURRENCY;
   const navigate = useNavigate();
 
-  const [isUser, setIsUser] = useState(false);
+  const [isUser, setIsUser] = useState(null); // null means loading
+  const [isUserLoading, setIsUserLoading] = useState(true); // Loading state for user
   const [isSeller, setIsSeller] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
   const [products, setProducts] = useState([]);
@@ -40,7 +41,6 @@ export const AppContextProvider = ({ children }) => {
         setIsSeller(false);
       }
     } catch (error) {
-      toast.error(error.message);
       setIsSeller(false);
     }
   };
@@ -51,10 +51,14 @@ export const AppContextProvider = ({ children }) => {
       const { data } = await axios.get("/api/user/is-auth");
       if (data.success) {
         setIsUser(data.user);
+      } else {
+        setIsUser(null);
       }
     } catch (error) {
       toast.error(error.message);
       setIsUser(null);
+    } finally {
+      setIsUserLoading(false); // Ensure loading state is set to false once fetch is complete
     }
   };
 
@@ -138,6 +142,7 @@ export const AppContextProvider = ({ children }) => {
     setIsUser,
     isSeller,
     setIsSeller,
+    isUserLoading, // Add loading state to context
     showUserLogin,
     setShowUserLogin,
     products,

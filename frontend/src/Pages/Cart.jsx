@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../Context/AppContext";
-import { assets, dummyAddress } from "../assets/assets";
+import toast from "react-hot-toast";
+import { assets } from "../assets/assets";
 
 const Cart = () => {
   const [showAddress, setShowAddress] = React.useState(false);
@@ -13,11 +14,13 @@ const Cart = () => {
     updateCartData,
     navigate,
     totalCartItemPrice,
+    axios,
+    isUser,
   } = useAppContext();
 
   const [cartArray, setCartArray] = useState([]);
-  const [address, setAddress] = useState(dummyAddress);
-  const [selectedAddress, setSelectedAddress] = useState(dummyAddress[0]);
+  const [address, setAddress] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const [paymentOption, setPaymentOption] = useState("COD");
 
   const getCart = () => {
@@ -30,15 +33,36 @@ const Cart = () => {
     setCartArray(tempArray);
   };
 
-  const placeOrder = async()=>{
+  const getAddress = async () => {
+    try {
+      const { data } = await axios.get("/api/address/get");
+      if (data.success) {
+        setAddress(data.address);
+        if (data.address.length > 0) {
+          setSelectedAddress(data.address[0]);
+        }
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
-  }
+  const placeOrder = async () => {};
 
   useEffect(() => {
     if (products.length > 0 && cartItems) {
       getCart();
     }
   }, [products, cartItems]);
+
+  useEffect(() => {
+    if (isUser) {
+      getAddress();
+    }
+  }, [isUser]);
+
   return products.length > 0 && cartItems ? (
     <div className="flex flex-col md:flex-row mt-10">
       <div className="flex-1 max-w-4xl">
@@ -82,7 +106,13 @@ const Cart = () => {
                   </p>
                   <div className="flex items-center">
                     <p>Qty:</p>
-                    <select onChange={(e)=> updateCartData(product._id, Number(e.target.value))} className="outline-none" value={cartItems[product._id]}>
+                    <select
+                      onChange={(e) =>
+                        updateCartData(product._id, Number(e.target.value))
+                      }
+                      className="outline-none"
+                      value={cartItems[product._id]}
+                    >
                       {Array(
                         cartItems[product._id] > 9 ? cartItems[product._id] : 9
                       )
@@ -153,14 +183,18 @@ const Cart = () => {
                 {address.map((address, index) => (
                   <p
                     key={index}
-                    onClick={() => {setSelectedAddress(address); setShowAddress(false)}}
+                    onClick={() => {
+                      setSelectedAddress(address);
+                      setShowAddress(false);
+                    }}
                     className="text-gray-500 p-2 hover:bg-gray-100"
                   >
-                    {address.street}, {address.city}, {address.state}, {address.country}
+                    {address.street}, {address.city}, {address.state},{" "}
+                    {address.country}
                   </p>
                 ))}
                 <p
-                  onClick={() => navigate('/add-address')}
+                  onClick={() => navigate("/add-address")}
                   className="text-indigo-500 text-center cursor-pointer p-2 hover:bg-indigo-500/10"
                 >
                   Add address
@@ -171,7 +205,10 @@ const Cart = () => {
 
           <p className="text-sm font-medium uppercase mt-6">Payment Method</p>
 
-          <select onChange={(e)=> setPaymentOption(e.target.value)} className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none">
+          <select
+            onChange={(e) => setPaymentOption(e.target.value)}
+            className="w-full border border-gray-300 bg-white px-3 py-2 mt-2 outline-none"
+          >
             <option value="COD">Cash On Delivery</option>
             <option value="Online">Online Payment</option>
           </select>
@@ -182,7 +219,10 @@ const Cart = () => {
         <div className="text-gray-500 mt-4 space-y-2">
           <p className="flex justify-between">
             <span>Price</span>
-            <span>{currency}{totalCartItemPrice()}</span>
+            <span>
+              {currency}
+              {totalCartItemPrice()}
+            </span>
           </p>
           <p className="flex justify-between">
             <span>Shipping Fee</span>
@@ -190,15 +230,24 @@ const Cart = () => {
           </p>
           <p className="flex justify-between">
             <span>Tax (2%)</span>
-            <span>{currency}{totalCartItemPrice() * 2 /100}</span>
+            <span>
+              {currency}
+              {(totalCartItemPrice() * 2) / 100}
+            </span>
           </p>
           <p className="flex justify-between text-lg font-medium mt-3">
             <span>Total Amount:</span>
-            <span>{currency}{totalCartItemPrice() + totalCartItemPrice() * 2 /100}</span>
+            <span>
+              {currency}
+              {totalCartItemPrice() + (totalCartItemPrice() * 2) / 100}
+            </span>
           </p>
         </div>
 
-        <button onClick={placeOrder} className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition">
+        <button
+          onClick={placeOrder}
+          className="w-full py-3 mt-6 cursor-pointer bg-indigo-500 text-white font-medium hover:bg-indigo-600 transition"
+        >
           {paymentOption === "COD" ? "Place Order" : "Procced to Checkout"}
         </button>
       </div>
