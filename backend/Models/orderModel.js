@@ -5,14 +5,14 @@ const orderSchema = new mongoose.Schema(
     userId: {
       type: String,
       required: true,
-      ref: "user",
+      ref: "User",
     },
     items: [
       {
         product: {
           type: String,
           required: true,
-          ref: "product",
+          ref: "Product",
         },
         quantity: {
           type: Number,
@@ -27,7 +27,7 @@ const orderSchema = new mongoose.Schema(
     address: {
       type: String,
       required: true,
-      ref: "address",
+      ref: "Address",
     },
     status: {
       type: String,
