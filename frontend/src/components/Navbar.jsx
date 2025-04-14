@@ -23,8 +23,6 @@ const Navbar = () => {
       if (data.success) {
         setIsUser(null);
         navigate("/");
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("token");
         toast.success(data.message);
       } else {
         toast.error(data.message);

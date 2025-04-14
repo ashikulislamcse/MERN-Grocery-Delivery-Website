@@ -106,7 +106,7 @@ export const isAuth = async (req, res) => {
 
 export const Logout = async (req, res) => {
   try {
-    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+    return res.status(200).Cookie("token", "", { maxAge: 0 }).json({
       message: "Logout Successfully",
       success: true,
     });

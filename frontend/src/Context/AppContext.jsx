@@ -12,8 +12,8 @@ export const AppContextProvider = ({ children }) => {
   const currency = import.meta.env.VITE_CURRENCY;
   const navigate = useNavigate();
 
-  const [isUser, setIsUser] = useState(null); // null means loading
-  const [isUserLoading, setIsUserLoading] = useState(true); // Loading state for user
+  const [isUser, setIsUser] = useState(null); 
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const [isSeller, setIsSeller] = useState(false);
   const [showUserLogin, setShowUserLogin] = useState(false);
   const [products, setProducts] = useState([]);
@@ -58,7 +58,7 @@ export const AppContextProvider = ({ children }) => {
       toast.error(error.message);
       setIsUser(null);
     } finally {
-      setIsUserLoading(false); // Ensure loading state is set to false once fetch is complete
+      setIsUserLoading(false); 
     }
   };
 
@@ -142,7 +142,7 @@ export const AppContextProvider = ({ children }) => {
     setIsUser,
     isSeller,
     setIsSeller,
-    isUserLoading, // Add loading state to context
+    isUserLoading, 
     showUserLogin,
     setShowUserLogin,
     products,
