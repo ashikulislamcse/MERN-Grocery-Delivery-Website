@@ -23,6 +23,8 @@ const Navbar = () => {
       if (data.success) {
         setIsUser(null);
         navigate("/");
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         toast.success(data.message);
       } else {
         toast.error(data.message);
@@ -141,7 +143,7 @@ const Navbar = () => {
             All Products
           </NavLink>
           {isUser && (
-            <NavLink to={"/orders"} onClick={() => setOpen(false)}>
+            <NavLink to={"/my-orders"} onClick={() => setOpen(false)}>
               My Orders
             </NavLink>
           )}
