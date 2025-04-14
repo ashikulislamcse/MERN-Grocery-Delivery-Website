@@ -112,7 +112,8 @@ export const Logout = async (req, res) => {
         maxAge: 0,
         httpOnly: true,
         sameSite: "None",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
       })
       .json({
         message: "Logout Successfully",
@@ -120,5 +121,6 @@ export const Logout = async (req, res) => {
       });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
