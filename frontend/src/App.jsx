@@ -18,6 +18,7 @@ import AddProduct from "./Pages/Seller/AddProduct";
 import ProductList from "./Pages/Seller/ProductList";
 import Orders from "./Pages/Seller/Orders";
 import ProtectedRoute from "./Pages/ProtectedRoute";
+import Loading from "./components/Loading";
 const App = () => {
   const isSellerPath = useLocation().pathname.includes("/seller");
   const { showUserLogin, isSeller } = useAppContext();
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           <Route path="/add-address" element={<AddAddress />} />
           <Route path="/my-orders" element={<MyOrders />} />
+          <Route path="/loader" element={<Loading />} />
           <Route
             path="/seller"
             element={isSeller ? <SellerLayout /> : <SellerLogin />}
