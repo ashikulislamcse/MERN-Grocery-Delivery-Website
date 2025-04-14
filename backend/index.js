@@ -12,6 +12,7 @@ import productRouter from './Routes/productRoute.js'
 import cartRouter from './Routes/cartRoute.js'
 import addressRouter from './Routes/addressRoute.js'
 import orderRouter from './Routes/orderRoute.js'
+import { stripeWebhook } from "./Controllers/orderController.js";
 
 connectClowdinary();
 
@@ -24,6 +25,8 @@ const corsOption = {
 };
 app.use(cors(corsOption));
 
+
+app.post('/stripe', express.raw({type: 'application/json'}),stripeWebhook);
 
 
 app.use("/api/user", userRoute);
