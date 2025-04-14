@@ -4,7 +4,7 @@ const authSeller = async (req, res, next) => {
   const { sellerToken } = req.cookies;
   if (!sellerToken) {
     return res.status(400).json({
-      message: "User not Authenticated",
+      message: "Seller not Authenticated",
       success: false,
     });
   }
