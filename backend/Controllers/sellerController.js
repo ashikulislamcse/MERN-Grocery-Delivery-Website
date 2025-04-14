@@ -25,7 +25,7 @@ export const sellerLogin = async (req, res) => {
           maxAge: 1 * 24 * 60 * 60 * 1000,
           httpOnly: true,
           sameSite: "None",
-          secure: process.env.NODE_ENV === "production",
+          secure: true,
         })
         .json({
           message: `Welcome Back Seller`,
