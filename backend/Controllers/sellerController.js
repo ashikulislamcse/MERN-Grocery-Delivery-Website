@@ -59,7 +59,7 @@ export const LogoutSeller = async (req, res) => {
   try {
     return res
       .status(200)
-      .Cookie("sellerToken", "", { maxAge: 0 })
+      .cookie("sellerToken", "", { maxAge: 0 })
       .json({
         message: "Logout Successfully",
         success: true,
