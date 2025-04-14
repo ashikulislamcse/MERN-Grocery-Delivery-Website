@@ -8,10 +8,10 @@ ConnectDB();
 import userRoute from "./Routes/userRoute.js";
 import sellerRouter from "./Routes/sellerRoute.js";
 import connectClowdinary from "./Utils/clowdinary.js";
-import productRouter from './Routes/productRoute.js'
-import cartRouter from './Routes/cartRoute.js'
-import addressRouter from './Routes/addressRoute.js'
-import orderRouter from './Routes/orderRoute.js'
+import productRouter from "./Routes/productRoute.js";
+import cartRouter from "./Routes/cartRoute.js";
+import addressRouter from "./Routes/addressRoute.js";
+import orderRouter from "./Routes/orderRoute.js";
 import { stripeWebhook } from "./Controllers/orderController.js";
 
 connectClowdinary();
@@ -25,9 +25,11 @@ const corsOption = {
 };
 app.use(cors(corsOption));
 
+app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhook);
 
-app.post('/stripe', express.raw({type: 'application/json'}),stripeWebhook);
-
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
 
 app.use("/api/user", userRoute);
 app.use("/api/seller", sellerRouter);
@@ -35,7 +37,6 @@ app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/address", addressRouter);
 app.use("/api/order", orderRouter);
-
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, (req, res) => {
