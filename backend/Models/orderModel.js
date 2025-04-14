@@ -3,14 +3,14 @@ import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema(
   {
     userId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
     items: [
       {
         product: {
-          type: String,
+          type: mongoose.Schema.Types.ObjectId,
           required: true,
           ref: "Product",
         },
@@ -25,7 +25,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     address: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Address",
     },
@@ -35,11 +35,11 @@ const orderSchema = new mongoose.Schema(
     },
     paymentType: {
       type: String,
+      enum: ["COD", "Online"],
       required: true,
     },
     isPaid: {
       type: Boolean,
-      required: true,
       default: false,
     },
   },
