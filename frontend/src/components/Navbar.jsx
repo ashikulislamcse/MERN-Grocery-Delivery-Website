@@ -19,7 +19,10 @@ const Navbar = () => {
 
   const logout = async () => {
     try {
-      const { data } = await axios.get("/api/user/logout");
+      const { data } = await axios.get("/api/user/logout", {
+        withCredentials: true,
+      });
+
       if (data.success) {
         setIsUser(null);
         navigate("/");
@@ -28,7 +31,7 @@ const Navbar = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 

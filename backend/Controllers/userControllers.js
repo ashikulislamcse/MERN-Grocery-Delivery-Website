@@ -105,12 +105,19 @@ export const isAuth = async (req, res) => {
 };
 
 export const Logout = async (req, res) => {
-
   try {
-    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-      message: "Logout Successfully",
-      success: true,
-    });
+    return res
+      .status(200)
+      .cookie("token", "", {
+        maxAge: 0,
+        httpOnly: true,
+        sameSite: "None",
+        secure: process.env.NODE_ENV === "production",
+      })
+      .json({
+        message: "Logout Successfully",
+        success: true,
+      });
   } catch (error) {
     console.log(error);
   }
