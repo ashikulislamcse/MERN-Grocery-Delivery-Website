@@ -82,7 +82,7 @@ export const Login = async (req, res) => {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         sameSite: "None",
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
       })
       .json({
         message: `Welcome Back ${user.name}`,
@@ -105,6 +105,7 @@ export const isAuth = async (req, res) => {
 };
 
 export const Logout = async (req, res) => {
+
   try {
     return res.status(200).cookie("token", "", { maxAge: 0 }).json({
       message: "Logout Successfully",
